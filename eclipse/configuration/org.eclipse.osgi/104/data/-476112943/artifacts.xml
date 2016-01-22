@@ -2,7 +2,7 @@
 <?artifactRepository version='1.1.0'?>
 <repository name='/home/zilby/Desktop/eclipse/.eclipseextension' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1.0.0'>
   <properties size='3'>
-    <property name='p2.timestamp' value='1452889628143'/>
+    <property name='p2.timestamp' value='1453497702882'/>
     <property name='org.eclipse.update.site.policy' value='USER-EXCLUDE'/>
     <property name='org.eclipse.update.site.list' value=''/>
   </properties>
@@ -11,5 +11,74 @@
     <rule filter='(&amp; (classifier=binary))' output='${repoUrl}/binary/${id}_${version}'/>
     <rule filter='(&amp; (classifier=org.eclipse.update.feature))' output='${repoUrl}/features/${id}_${version}.jar'/>
   </mappings>
-  <artifacts size='0'/>
+  <artifacts size='6'>
+    <artifact classifier='org.eclipse.update.feature' id='acl2s' version='1.1.8.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='4096'/>
+        <property name='download.size' value='4096'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+      <repositoryProperties size='3'>
+        <property name='artifact.folder' value='true'/>
+        <property name='artifact.reference' value='file:/home/zilby/Desktop/eclipse/features/acl2s_1.1.8.0/'/>
+        <property name='file.name' value='/home/zilby/Desktop/eclipse/features/acl2s_1.1.8.0'/>
+      </repositoryProperties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='acl2s_hooks' version='1.1.8.0'>
+      <properties size='2'>
+        <property name='artifact.size' value='4096'/>
+        <property name='download.size' value='4096'/>
+      </properties>
+      <repositoryProperties size='3'>
+        <property name='artifact.folder' value='true'/>
+        <property name='artifact.reference' value='file:/home/zilby/Desktop/eclipse/plugins/acl2s_hooks_1.1.8.0/'/>
+        <property name='file.name' value='/home/zilby/Desktop/eclipse/plugins/acl2s_hooks_1.1.8.0'/>
+      </repositoryProperties>
+    </artifact>
+    <artifact classifier='org.eclipse.update.feature' id='acl2_image.linux.x86_64' version='7.1.0'>
+      <properties size='3'>
+        <property name='artifact.size' value='4096'/>
+        <property name='download.size' value='4096'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+      <repositoryProperties size='3'>
+        <property name='artifact.folder' value='true'/>
+        <property name='artifact.reference' value='file:/home/zilby/Desktop/eclipse/features/acl2_image.linux.x86_64_7.1.0/'/>
+        <property name='file.name' value='/home/zilby/Desktop/eclipse/features/acl2_image.linux.x86_64_7.1.0'/>
+      </repositoryProperties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='acl2s_modes' version='1.1.8.0'>
+      <properties size='2'>
+        <property name='artifact.size' value='4096'/>
+        <property name='download.size' value='4096'/>
+      </properties>
+      <repositoryProperties size='3'>
+        <property name='artifact.folder' value='true'/>
+        <property name='artifact.reference' value='file:/home/zilby/Desktop/eclipse/plugins/acl2s_modes_1.1.8.0/'/>
+        <property name='file.name' value='/home/zilby/Desktop/eclipse/plugins/acl2s_modes_1.1.8.0'/>
+      </repositoryProperties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='acl2s' version='1.1.8.0'>
+      <properties size='2'>
+        <property name='artifact.size' value='4096'/>
+        <property name='download.size' value='4096'/>
+      </properties>
+      <repositoryProperties size='3'>
+        <property name='artifact.folder' value='true'/>
+        <property name='artifact.reference' value='file:/home/zilby/Desktop/eclipse/plugins/acl2s_1.1.8.0/'/>
+        <property name='file.name' value='/home/zilby/Desktop/eclipse/plugins/acl2s_1.1.8.0'/>
+      </repositoryProperties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='acl2_image.linux.x86_64' version='7.1.0'>
+      <properties size='2'>
+        <property name='artifact.size' value='4096'/>
+        <property name='download.size' value='4096'/>
+      </properties>
+      <repositoryProperties size='3'>
+        <property name='artifact.folder' value='true'/>
+        <property name='artifact.reference' value='file:/home/zilby/Desktop/eclipse/plugins/acl2_image.linux.x86_64_7.1.0/'/>
+        <property name='file.name' value='/home/zilby/Desktop/eclipse/plugins/acl2_image.linux.x86_64_7.1.0'/>
+      </repositoryProperties>
+    </artifact>
+  </artifacts>
 </repository>

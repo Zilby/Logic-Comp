@@ -1,0 +1,21 @@
+How to ACL2s:
+
+-Go to eclipse
+-Enter ./eclipse
+-Go to Open Perspective in top right corner
+-Select ACL2 Development
+-Go to File -> New -> Project
+-Press next
+-Enter project name (eg: Lab1)
+-Go to File -> New -> ACL2s/Lisp File
+-Drag windows to appropriate places
+
+To Run:
+
+-Go to Advance todo line
+-To run again must first Cancel all todo forms
+
+To change session type:
+
+-Go to Stop/kill session
+-Go to ACL2s -> Set Session mode
