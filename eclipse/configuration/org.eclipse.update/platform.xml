@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<config date="1453497697660" transient="false">
+<config date="1453498399935" transient="false">
 	<site updateable="true" url="platform:/base/" enabled="true" policy="USER-EXCLUDE">
 		<feature id="org.eclipse.equinox.p2.extras.feature" version="1.2.0.v20150129-0838" url="features/org.eclipse.equinox.p2.extras.feature_1.2.0.v20150129-0838/">
 		</feature>
