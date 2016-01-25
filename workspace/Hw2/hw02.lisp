@@ -66,7 +66,7 @@ This homework is done in groups. The rules are:
    to confirm that alleged group members agree to be members of that group)
  * you must list the names of ALL group members below.
 
-Names of ALL group members: Alexander Zilbersher
+Names of ALL group members: Alexander Zilbersher, Phoenix Moomaw, Raghavparsanna Rajagopalan
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
