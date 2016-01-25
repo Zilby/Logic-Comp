@@ -246,7 +246,7 @@ your function is supposed to do. That is what your own tests are for!
 ; the end of the list.
 
 (defunc select-range (l m n)
-  :input-contract (and (listp l) (natp m) (natp n))
+  :input-contract (and (listp l) (natp m) (natp n) (<= m n))
   :output-contract (listp (select-range l m n))
   (if (endp l)
     l
@@ -286,8 +286,7 @@ your function is supposed to do. That is what your own tests are for!
 (check= (is-subsequence (list 1 3 2) ()) nil)
 (check= (is-subsequence () ())   t)
 (check= (is-subsequence (list 1 2) (list 1 3 2))   t)
-(check= (is-subsequence (list 1 3) (list 3 1 1)) ())#|ACL2s-ToDo-Line|#
-
+(check= (is-subsequence (list 1 3) (list 3 1 1)) ())
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -321,13 +320,15 @@ your function is supposed to do. That is what your own tests are for!
     l
     (if (>= (first l) n)
       (append (list (first l)) (hirsh-helper (rest l) (+ n 1)))
-      (hirsh-helper (rest l) (+ n 1)))))
+      ())))
 
 (defunc hirsh (l)
   :input-contract (natlistp l)
   :output-contract (natlistp (hirsh l))
   (hirsh-helper l 1))
 
+(check= (hirsh ()) ())
+(check= (hirsh (list 0 5 6 7)) ())
 (check= (hirsh (list 5 3 2 1)) (list 5 3))
 (check= (hirsh (list 5 6 4 2)) (list 5 6 4))
 (check= (hirsh (list 0 2 7)) ())
@@ -342,10 +343,15 @@ your function is supposed to do. That is what your own tests are for!
 (defunc negate (l)
   :input-contract (rationallistp l)
   :output-contract (rationallistp (negate l))
-...
-...)
+  (if (endp l) 
+    l
+    (append (list (* -1 (first l))) (negate (rest l)))))
 
+(check= (negate ()) ())
 (check= (negate (list 1 2 3 4)) (list -1 -2 -3 -4))
+(check= (negate (list -1 2 -3 4)) (list 1 -2 3 -4))
+(check= (negate (list -2 -1 0 1 2)) (list 2 1 0 -1 -2))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -358,11 +364,17 @@ your function is supposed to do. That is what your own tests are for!
 (defunc power (x p)
   :input-contract (and (rationalp x) (natp p))
   :output-contract (rationalp (power x p))
-  ...
-)
+  (if (equal p 0)
+    1
+    (if (equal p 1)
+      x
+      (* x (power x (- p 1))))))
 
 (check= (power 0 0) 1)
-(check= (power 5/3 2) 25/9)
+(check= (power 0 1) 0)
+(check= (power 2 6) 64)
+(check= (power 5/3 2) 25/9)#|ACL2s-ToDo-Line|#
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -376,8 +388,9 @@ your function is supposed to do. That is what your own tests are for!
 (defunc diff (l)
   :input-contract (and (not (endp l)) (rationallistp l))
   :output-contract (rationallistp (diff l))
-...
-...)
+  (if (endp (rest l))
+    ()
+    (append (list (- (first l) (first (rest l)))) (diff (rest l)))))
 
 (check= (diff (list 1 2 3 4)) (list -1 -1 -1))
 (check= (diff (list 2 8 3)) (list -6 5))

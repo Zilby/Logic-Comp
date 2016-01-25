@@ -1,8 +1,10 @@
 #version=1
+acl2_image.linux.x86,7.1.0,plugins/acl2_image.linux.x86_7.1.0/,4,false
 acl2_image.linux.x86_64,7.1.0,plugins/acl2_image.linux.x86_64_7.1.0/,4,false
-acl2s,1.1.8.0,plugins/acl2s_1.1.8.0/,4,false
+acl2s,1.1.8.1,plugins/acl2s_1.1.8.1/,4,false
+acl2s_hooks,1.1.8.1,plugins/acl2s_hooks_1.1.8.1/,4,false
 acl2s_hooks,1.1.8.0,plugins/acl2s_hooks_1.1.8.0/,4,false
-acl2s_modes,1.1.8.0,plugins/acl2s_modes_1.1.8.0/,4,false
+acl2s_modes,1.1.8.1,plugins/acl2s_modes_1.1.8.1/,4,false
 com.ibm.icu,52.1.1.v201501240615,plugins/com.ibm.icu_52.1.1.v201501240615.jar,4,false
 com.jcraft.jsch,0.1.51.v201410302000,plugins/com.jcraft.jsch_0.1.51.v201410302000.jar,4,false
 com.sun.el,2.2.0.v201303151357,plugins/com.sun.el_2.2.0.v201303151357.jar,4,false
