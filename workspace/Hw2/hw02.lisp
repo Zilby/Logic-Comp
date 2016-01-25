@@ -176,7 +176,7 @@ your function is supposed to do. That is what your own tests are for!
 
 (defunc select (l n)
   :input-contract (and (listp l) (natp n))
-  :output-contract (atom (select l n))
+  :output-contract t
   (if (endp l)
     l
     (if (equal n 0) 
@@ -245,6 +245,10 @@ your function is supposed to do. That is what your own tests are for!
 ; the array, then return the list of elements starting at m and continuing to
 ; the end of the list.
 
+#| 
+
+Solution without using prior functions:
+
 (defunc select-range (l m n)
   :input-contract (and (listp l) (natp m) (natp n) (<= m n))
   :output-contract (listp (select-range l m n))
@@ -255,6 +259,15 @@ your function is supposed to do. That is what your own tests are for!
         (list (first l))
         (append (list (first l)) (select-range (rest l) m (- n 1))))
       (select-range (rest l) (- m 1) (- n 1)))))
+
+Cleaner solution using already defined functions: 
+
+|# 
+
+(defunc select-range (l m n)
+  :input-contract (and (listp l) (natp m) (natp n) (<= m n))
+  :output-contract (listp (select-range l m n))
+  (select-after (select-before l n) m))
 
 (check= (select-range () 2 5) ())
 (check= (select-range (list "a" "b" "c" "d") 1 5) (list "b" "c" "d"))
@@ -373,8 +386,7 @@ your function is supposed to do. That is what your own tests are for!
 (check= (power 0 0) 1)
 (check= (power 0 1) 0)
 (check= (power 2 6) 64)
-(check= (power 5/3 2) 25/9)#|ACL2s-ToDo-Line|#
-
+(check= (power 5/3 2) 25/9)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -386,12 +398,14 @@ your function is supposed to do. That is what your own tests are for!
 ; then the list of differences is empty.
 
 (defunc diff (l)
-  :input-contract (and (not (endp l)) (rationallistp l))
+  :input-contract (and (rationallistp l) (not (endp l)))
   :output-contract (rationallistp (diff l))
   (if (endp (rest l))
     ()
     (append (list (- (first l) (first (rest l)))) (diff (rest l)))))
 
+(check= (diff (list 2)) ())
+(check= (diff (list 7 3 5 7 2)) (list 4 -2 -2 5))
 (check= (diff (list 1 2 3 4)) (list -1 -1 -1))
 (check= (diff (list 2 8 3)) (list -6 5))
 
@@ -404,10 +418,11 @@ your function is supposed to do. That is what your own tests are for!
 ; differences between the elements of l.
 
 (defunc moment-diff (l p)
-  :input-contract (and (not (endp l)) (rationallistp l) (natp p))
+  :input-contract (and (rationallistp l) (not (endp l)) (natp p))
   :output-contract (rationalp (moment-diff l p))
-  ...
-)
+  (if (endp (diff l))
+    0
+    (+ (power (first (diff l)) p) (moment-diff (rest l) p))))
 
 (check= (moment-diff (list 1 2 3 4) 1) -3)
 ; Because the successive differences of the list is (list -1 -1 -1)
@@ -424,4 +439,6 @@ your function is supposed to do. That is what your own tests are for!
 ; The 2th power of this is (list 0 1 1), since 0^2 = 0 and 1^2 = 1 
 ; The sum of the elements of this list is 2
 
+(check= (moment-diff (list 1) 2) 0)
+(check= (moment-diff (list 6 7 5 3 2 2 6) 4) 290)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
