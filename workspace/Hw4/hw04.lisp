@@ -253,23 +253,80 @@ Formalize this puzzle as a satisfiability problem.
 
 (a) Define propositional variables for each entry in the puzzle.
 
-...
+For this problem:
++-----+-----+-----+-----+
+| oaz | saz | tay | fay |
++-----+-----+-----+-----+
+| obz | sbz | tby | fby |
++-----+-----+-----+-----+
+| ocx | scx | tcw | fcw |
++-----+-----+-----+-----+
+| odx | sdx | tdw | fdw |
++-----+-----+-----+-----+
 
 (b) Using these variables, specify the constraints as a propositional
 formula.  For the moment assume that none of the entries has been filled.
 
-...
-
-...
+((((oaz ∧ saz) <> (tay ∧ fay)) v ((oaz ∧ tay) <> (saz ∧ fay)) v        row1
+        ((oaz ∧ fay) <> (saz ∧ tay))) ∧
+    (((obz ∧ sbz) <> (tby ∧ fby)) v ((obz ∧ tby) <> (sbz ∧ fby)) v     row2
+        ((obz ∧ fby) <> (sbz ∧ tby))) ∧
+    (((ocx ∧ scx) <> (tcw ∧ fcw)) v ((ocx ∧ tcw) <> (scx ∧ fcw)) v     row3
+        ((ocx ∧ fcw) <> (scx ∧ tcw))) ∧
+    (((odx ∧ sdx) <> (tdw ∧ fdw)) v ((odx ∧ tdw) <> (sdx ∧ fdw)) v     row4
+        ((odx ∧ fdw) <> (sdx ∧ tdw)))) ∧
+  ((((oaz ∧ obz) <> (ocx ∧ odx)) v ((oaz ∧ ocx) <> (obz ∧ odx)) v      column1
+        ((oaz ∧ odx) <> (obz ∧ ocx))) ∧
+    (((saz ∧ sbz) <> (scx ∧ sdx)) v ((saz ∧ scx) <> (sbz ∧ sdx)) v     column2
+        ((saz ∧ sdx) <> (sbz ∧ scx))) ∧
+    (((tay ∧ tby) <> (tcw ∧ tdw)) v ((tay ∧ tcw) <> (tby ∧ tdw)) v     column3
+        ((tay ∧ tdw) <> (tby ∧ tcw))) ∧
+    (((fay ∧ fby) <> (fcw ∧ fdw)) v ((fay ∧ fcw) <> (fby ∧ fdw)) v     column4
+        ((fay ∧ fdw) <> (fby ∧ fcw)))) ∧
+  ((((oaz ∧ saz) <> (obz ∧ sbz)) v ((oaz ∧ obz) <> (saz ∧ sbz)) v      box1
+        ((oaz ∧ sbz) <> (saz ∧ obz))) ∧
+    (((tay ∧ fay) <> (tby ∧ fby)) v ((tay ∧ tby) <> (fay ∧ fby)) v     box2
+        ((tay ∧ fby) <> (fay ∧ tby))) ∧
+    (((ocx ∧ scx) <> (odx ∧ sdx)) v ((ocx ∧ odx) <> (scx ∧ sdx)) v     box3
+        ((ocx ∧ sdx) <> (scx ∧ odx))) ∧
+    (((tcw ∧ fcw) <> (tdw ∧ fdw)) v ((tcw ∧ tdw) <> (fcw ∧ fdw)) v     box4
+        ((tcw ∧ fdw) <> (fcw ∧ tdw))))
+    
+Each constraint is checked for individually by row, by column, and by box
+which ensures that each constraint is met. This formula will not be satisfied 
+unless there are EXACTLY two 1s and two 0s in each row, column, and box.
 
 (c) Show that the formula you have found in (b) is satisfiable. 
++-----+-----+-----+-----+
+|  1  |  0  |  0  |  1  |
++-----+-----+-----+-----+
+|  1  |  0  |  0  |  1  |
++-----+-----+-----+-----+
+|  0  |  1  |  1  |  0  |
++-----+-----+-----+-----+
+|  0  |  1  |  1  |  0  |
++-----+-----+-----+-----+
 
-...
+oaz | saz | tay | fay | obz | sbz | tby | fby | ocx | scx | tcw | fcw | cont'd
+----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+
+ T  |  F  |  F  |  T  |  T  |  F  |  F  |  T  |  F  |  T  |  T  |  F  |
+----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+
+odx | sdx | tdw | fdw | FORMULA |
+----+-----+-----+-----+---------+
+ F  |  T  |  T  |  F  |    T    |
+----+-----+-----+-----+---------+
 
 (d) Show how to specify the filled in entries by adding additional
 constraints.
 
-...
+If any value is given, those values can be substituted in for their 
+corresponding variables. For instance, if oaz and saz are given to be
+true, then the first expression [ (oaz ∧ saz) ] becomes true, and the
+corresponding expression [ (tay ∧ fay) ] MUST be nil. This puts a constraint
+on the whole first row, and also gives information to the other corresponding
+columns and boxes. Logically, this is how Suduko functions: as information
+is added, more boxes are logically filled in. It follows the same process
+when there are pre-filled entries.
 
 |#
 
