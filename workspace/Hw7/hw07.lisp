@@ -273,19 +273,22 @@ a. Prove the following using equational reasoning:
   (implies (endp l) (<= (index a l) (len2 l))))
 
 C1. (listp l)
-C2. (endp l)
---------------
-C3. (equal l nil) {C1, C2, Def endp, Def listp}
+C2. (endp l) 
+-------------
+C3. (equals l nil) {C1, C2, Def endp, Def listp} 
+C4. (equals (len2 l) 0) {Def len2, cons axioms, C3}
 
 Proof:
 
-(<= (index a l) (len2 l))
-= {Def index, C2, if axiom}
-(<= 0 (len2 l))
-= {Def len2, C2, if axiom}
-(<= 0 0)
-={Propositional Reasoning}
-T QED
+(index a l)
+= {Def index, instantiating ((l ())), C3, C1, C2}
+(index a ())
+= {Def index, cons axioms}
+0
+= {Equality axioms, C4, C3}
+(len2 l)
+QED
+
 
 b. Prove the following using equational reasoning:
 
@@ -297,24 +300,29 @@ b. Prove the following using equational reasoning:
 
 C1. (listp l)
 C2. (not (endp l))
-C3. (equal a (first l))
+C3. (equal a (first l)) 
 -----------------------
-C4. (listp (rest l)) {C1, C2, Def listp}
+C4. (listp (rest l)) {C1, C2, Def listp} 
 
-Proof: 
+Proof:
 
-(<= (index a l) (len2 l))
-= {Def index, C2, C3, cond axiom}
-(<= 0 (len2 l))
+LHS
+(index a l)
+= {Def index, cons axioms, C2, C3}
+0
+
+RHS
+(len2 l)
 = {Def len2, C2, if axiom}
-(<= 0 (+ 1 (len2 (rest l))))
-= {contract len2, C4, arithmetic}
-(<= 0 1)
-={Propositional Reasoning}
-T QED
+(+ 1 (len2 (rest l)))
+= {Contract len2, C4, arithmetic}
+1
+
+0 < 1
+QED
+
 
 c. Prove the following using equational reasoning:
-
 (implies (listp l)
   (implies
     (and (not (endp l))
@@ -329,7 +337,7 @@ C4. (<= (index a (rest l)) (len2 (rest l)))
 -------------------------------------------
 C5. (listp (rest l)) {C1, C2, Def listp}
 
-Proof: 
+Proof:
 
 (<= (index a l) (len2 l))
 = {Def index, C2, C3, cond axiom}
@@ -339,7 +347,7 @@ Proof:
 = {arithmetic}
 (<= (index a (rest l)) (len2 (rest l)))
 = {C4}
-T QED
+QED
 
 
 Question 2 :
@@ -353,7 +361,15 @@ a. Prove the following using equational reasoning:
   (implies (endp l)
     (implies (in2 a l) (< (index a l) (len2 l)))))
 
-...
+C1. (endp l)
+C2. (listp l)
+
+Proof:
+(in2 a l) => (< (index a l) (len2 l))
+= {Def in2, C2}
+F => (< (index a l) (len2 l))
+=  {propositional reasoning}
+QED
 
 b. Prove the following using equational reasoning:
 
@@ -363,7 +379,22 @@ b. Prove the following using equational reasoning:
           (equal a (first l)))
      (implies (in2 a l) (< (index a l) (len2 l)))))
 
-...
+C1. (listp l)
+C2. (not (endp l))
+C3. (equal a (first l))
+C4. (in2 a l)
+-----------------------
+C5. (listp (rest l)) {C1, C2, Def listp}
+
+Proof:
+(< (index a l) (len2 l))
+= {C3, Def index}
+(< 0 (len2 l))
+= {Def len2, C2} 
+(< 0 (+ 1 (len2 (rest l))))
+= {Contract len2, C5, arithmetic}
+(< 0 1)
+QED
 
 c. Prove the following using equational reasoning:
 
@@ -374,7 +405,26 @@ c. Prove the following using equational reasoning:
           (implies (in2 a (rest l)) (< (index a (rest l)) (len2 (rest l)))))
      (implies (in2 a l) (< (index a l) (len2 l)))))
 
-...
+C1. (listp l)
+C2. (not (endp l))
+C3. (not (equal a (first l)))
+C4. (implies (in2 a (rest l)) (< (index a (rest l)) (len2 (rest l))))
+C5. (in2 a l) 
+-----------------------
+C6. (listp (rest l)) {C1, C2, Def listp}
+C7. (in2 a (rest l)) {C2, C3, C5, Def in2}
+C8. (< (index a (rest l)) (len2 (rest l))) {C4, C7}
+
+Proof:
+(< (index a l) (len2 l))
+= {C2, C3, Def index}
+(< (+ 1 (index (rest l))) (len2 l))
+= {Def len2, C2} 
+(< (+ 1 (index (rest l))) (+ 1 (len2 (rest l))))
+= {arithmetic}
+(< (index (rest l)) (len2 (rest l)))
+= {C8}
+QED
 
 Question 3 :
 
@@ -387,7 +437,18 @@ a. Prove the following using equational reasoning:
   (implies (endp l)
     (implies (not (in2 a l)) (equal (index a l) (len2 l)))))
 
-...
+C1. (listp l)
+C2. (endp l)
+---------------
+C3. (not (in2 a l)) {C2, Def in2}
+
+Proof:
+(= (index a l) (len2 l))
+= {Def index, C2}
+(= 0 (len2 l))
+= {Def len2, C2}
+(= 0 0)
+QED
 
 b. Prove the following using equational reasoning:
 
@@ -397,7 +458,18 @@ b. Prove the following using equational reasoning:
           (equal a (first l)))
      (implies (not (in2 a l)) (equal (index a l) (len2 l)))))
 
-...
+C1. (listp l)
+C2. (not endp l)
+C3. (equal a (first l))
+---------------------
+C5. (listp (rest l)) {C1, C2, Def listp}
+
+Proof: 
+(not (in2 a l)) => (= (index a l) (len2 l))
+= {Def in2, C2, C3}
+F => (= (index a l) (len2 l))
+= {Propositional Reasoning}
+QED
 
 c. Prove the following using equational reasoning:
 
@@ -408,7 +480,26 @@ c. Prove the following using equational reasoning:
           (implies (not (in2 a (rest l))) (equal (index a (rest l)) (len2 (rest l)))))
      (implies (not (in2 a l)) (equal (index a l) (len2 l)))))
 
-...
+C1. (listp l)
+C2. (not endp l)
+C3. (not (equal a (first l)))
+C4. (implies (not (in2 a (rest l))) (equal (index a (rest l)) (len2 (rest l))))
+C5. (not (in2 a l))
+---------------------
+C6. (listp (rest l)) {C1, C2, Def listp}
+C7. (not (in2 a (rest l))) {C2, C3, C5, Def in2}
+C8. (equal (index a (rest l)) (len2 (rest l)))
+
+Proof:
+(= (index a l) (len2 l))
+= {C2, C3, Def index}
+(= (+ 1 (index (rest l))) (len2 l))
+= {Def len2, C2} 
+(= (+ 1 (index (rest l))) (+ 1 (len2 (rest l))))
+= {arithmetic}
+(= (index (rest l)) (len2 (rest l)))
+= {C8}
+QED
 
 Question 4 :
 
@@ -435,7 +526,46 @@ a. Prove the following using equational reasoning:
               (equal n 0))
          (equal (a 2 n) (+ (* 2 n) 3)))
 
-...
+C1. (natp n)
+C2. (equal n 0)
+--------------
+A0. Theorem A0. (implies (natp n) (equal (a 0 n) (+ 1 n)))
+A1. Theorem A1  (implies (natp n) (equal (a 1 n) (+ 2 n)))
+
+Proof:
+LHS
+(a 2 n)
+= {Def a, instantiating ((m 2) (n 0)), C1, C2}
+(a 2 0)
+= {Def a, if axioms, C2}
+(a (- 2 1) 1)
+= {Def a, arithmetic}
+(a 1 1)
+= {Def a, if axioms}
+(a (- 1 1) (a 1 (- 1 1)))
+= {Def a, artihmetic}
+(a 0 (a 1 0))
+= {Def a, if axioms, C2}
+(a 0 (a (- 1 1) 1))
+= {Def a, arithmetic}
+(a 0 (a 0 1))
+= {Def a, if axioms}
+(a 0 (+ 1 1))
+= {Def a, arithmetic}
+(a 0 2)
+= {Def a, if axioms}
+(+ 2 1)
+= {Arithmetic}
+3
+
+RHS
+(+ (* 2 n) 3)
+= {Arithmetic, instantiating ((n 0))}
+(+ (* 2 0) 3)
+= {Arithmetic}
+3
+
+QED
 
 b. Prove the following using equational reasoning:
 
@@ -445,7 +575,34 @@ b. Prove the following using equational reasoning:
                        (equal (a 2 (- n 1)) (+ (* 2 (- n 1)) 3))))
          (equal (a 2 n) (+ (* 2 n) 3)))
 
-...
+C1. (natp n)
+C2. (not (equal n 0)
+C3. (implies (natp (- n 1))
+             (equal (a 2 (- n 1)) (+ (* 2 (- n 1)) 3)))
+--------------
+C4. (natp (- n 1)) {C1, C2, arithmetic}
+C5. (equal (a 2 (- n 1)) (+ (* 2 (- n 1)) 3)) {C3, C4}
+A0. Theorem A0. (implies (natp n) (equal (a 0 n) (+ 1 n)))
+A1. Theorem A1  (implies (natp n) (equal (a 1 n) (+ 2 n)))
+
+Proof:
+(a 2 n)
+= {Def a, instantiating ((m 2) (n n)), if axioms, C1, C2, C4}
+(a (- 2 1) (a 2 (- n 1)))
+= {Arithmetic}
+(a 1 (a 2 (- n 1)))
+= {Def a, A1}
+(+ 2 (a 2 (- n 1)))
+= {Def a, C5, C4, C3}
+(+ 2 (+ (* 2 (- n 1)) 3))
+= {Arithmetic}
+(+ 2 (+ (- (* 2 n) 2) 3))
+= {Arithmetic}
+(+ 2 (+ (* 2 n) 1))
+= {Arithmetic}
+(+ (* 2 n) 3)
+
+QED
 
 |#
 
